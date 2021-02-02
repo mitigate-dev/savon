@@ -242,15 +242,22 @@ module Savon
 
       # the mail.body.encoded algorithm reorders the parts, default order is [ "text/plain", "text/enriched", "text/html" ]
       # should redefine the sort order, because the soap request xml should be the first
-      multipart_message.body.set_sort_order [ "text/xml" ]
+      multipart_message.body.set_sort_order ['application/xop+xml', 'text/xml']
 
       multipart_message.body.encoded(multipart_message.content_transfer_encoding)
     end
 
     def init_multipart_message(message_xml)
       multipart_message = Mail.new
+
+      if @locals[:mtom]
+        type = "application/xop+xml; charset=#{@globals[:encoding]}; type=\"text/xml\""
+      else
+        type = 'text/xml'
+      end
+
       xml_part = Mail::Part.new do
-        content_type 'text/xml'
+        content_type type
         body message_xml
         # in Content-Type the start parameter is recommended (RFC 2387)
         content_id '<soap-request-body@soap>'

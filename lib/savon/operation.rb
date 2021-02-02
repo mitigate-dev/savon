@@ -102,10 +102,7 @@ module Savon
 
       if builder.multipart
         request.gzip
-        request.headers["Content-Type"] = ["multipart/related",
-                                           "type=\"#{SOAP_REQUEST_TYPE[@globals[:soap_version]]}\"",
-                                           "start=\"#{builder.multipart[:start]}\"",
-                                           "boundary=\"#{builder.multipart[:multipart_boundary]}\""].join("; ")
+        request.headers["Content-Type"] = content_type_header(builder)
         request.headers["MIME-Version"] = "1.0"
       end
 
@@ -136,6 +133,21 @@ module Savon
           url.port = host_url.port
         end
       end
+    end
+
+    def content_type_header(builder)
+      header = ["multipart/related"]
+
+      if @locals[:mtom]
+        header << "type=\"application/xop+xml\""
+        header << "start-info=\"application/soap+xml\""
+      else
+        header << "type=\"#{SOAP_REQUEST_TYPE[@globals[:soap_version]]}\""
+      end
+
+      header << "start=\"#{builder.multipart[:start]}\""
+      header << "boundary=\"#{builder.multipart[:multipart_boundary]}\""
+      header.join('; ')
     end
 
     def raise_expected_httpi_response!
