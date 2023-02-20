@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://savonrb.com"
   s.summary     = "Heavy metal SOAP client"
   s.description = s.summary
-  s.required_ruby_version = '>= 2.5.0'
+  s.required_ruby_version = '>= 2.7.0'
 
   s.license = 'MIT'
 
@@ -25,8 +25,8 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri", ">= 1.8.1"
   s.add_dependency "mail",     "~> 2.5"
 
-  s.add_development_dependency "rack"
-  s.add_development_dependency "puma",  ">= 4.3.8"
+  s.add_development_dependency "rack", " < 4"
+  s.add_development_dependency "puma",  ">= 4.3.8", "< 7"
 
   s.add_development_dependency "byebug"
   s.add_development_dependency "rake",  ">= 12.3.3"
@@ -34,14 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "mocha", "~> 0.14"
   s.add_development_dependency "json",  ">= 2.3.0"
 
-  ignores  = File.readlines(".gitignore").grep(/\S+/).map(&:chomp)
-  dotfiles = %w[.gitignore .travis.yml .yardopts]
-
-  all_files_without_ignores = Dir["**/*"].reject { |f|
-    File.directory?(f) || ignores.any? { |i| File.fnmatch(i, f) }
-  }
-
-  s.files = (all_files_without_ignores + dotfiles).sort
+  s.files = Dir['CHANGELOG.md', 'LICENSE', 'README.md', 'Rakefile', 'lib/**/*.rb']
 
   s.require_path = "lib"
 end

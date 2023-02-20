@@ -2,7 +2,7 @@
 
 Heavy metal SOAP client
 
-[Documentation](https://www.rubydoc.info/gems/savon/) | [Support](https://stackoverflow.com/questions/tagged/savon) | 
+[Documentation](https://www.rubydoc.info/gems/savon/) | [Support](https://stackoverflow.com/questions/tagged/savon) |
 [Mailing list](https://groups.google.com/forum/#!forum/savonrb) | [Twitter](http://twitter.com/savonrb)
 
 [![Ruby](https://github.com/savonrb/savon/actions/workflows/ci.yml/badge.svg)](https://github.com/savonrb/savon/actions/workflows/ci.yml)
@@ -22,7 +22,7 @@ $ gem install savon
 or add it to your Gemfile like this:
 
 ```
-gem 'savon', '~> 2.12.0'
+gem 'savon', '~> 2.13.0'
 ```
 
 ## Usage example
@@ -54,7 +54,7 @@ For more examples, you should check out the
 
 ## Ruby version support
 
-* `master` - MRI 2.5, 2.6, 2.7 (same support as Ruby)
+* `master` - MRI 2.7, 3.0, 3.1 (same support as Ruby)
 * 2.12.x - MRI 2.2, 2.3, 2.4, 2.5
 * 2.11.x - MRI 2.0, 2.1, 2.2, and 2.3
 
@@ -76,5 +76,3 @@ $ bundle exec rspec
 ## Documentation
 
 Please be sure to [read the documentation](https://www.rubydoc.info/github/savonrb/savon/).
-
-
