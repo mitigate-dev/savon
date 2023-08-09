@@ -101,7 +101,7 @@ module Savon
       request.body = builder.to_s
 
       if builder.multipart
-        request.gzip
+        request.gzip unless @locals[:mtom]
         request.headers["Content-Type"] = content_type_header(builder)
         request.headers["MIME-Version"] = "1.0"
       end

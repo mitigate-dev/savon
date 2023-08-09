@@ -262,8 +262,14 @@ module Savon
     def init_multipart_message(message_xml)
       multipart_message = Mail.new
 
+      # MTOM differs from general SOAP attachments:
+      # 1. binary encoding
+      # 2. application/xop+xml mime type
       if @locals[:mtom]
         type = "application/xop+xml; charset=#{@globals[:encoding]}; type=\"text/xml\""
+
+        multipart_message.transport_encoding = 'binary'
+        message_xml.force_encoding('BINARY')
       else
         type = 'text/xml'
       end
