@@ -1,7 +1,13 @@
 # Savon changelog
 
 ## Unreleased
+* Ruby 3.0+ is required in the gemspec.
 * Add your PR changelog line here
+
+## 2.15.0 (2024-02-10)
+
+* Drop support for ruby 2.7 and below. Added Ruby 3.2 and 3.3 to test matrix.
+* Allows wasabi v5.x, which now supports faraday
 
 ## 2.14.0 (2022-12-16)
 
@@ -12,6 +18,7 @@
 ## 2.13.1 (2022-09-04)
 
 * Fix: [#977](https://github.com/savonrb/savon/pull/977) Prevent "xmlns:xmlns" namespace but allow "xmlns" namespace.
+* Change: Require Ruby 2.7.0+ in the gemspec. [0e0d695f](https://github.com/savonrb/savon/commit/0e0d695f463b719fa0fef0f58a0404b1228957f0)
 
 ## 2.13.0 (2022-08-03)
 

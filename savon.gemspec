@@ -12,13 +12,13 @@ Gem::Specification.new do |s|
   s.homepage    = "http://savonrb.com"
   s.summary     = "Heavy metal SOAP client"
   s.description = s.summary
-  s.required_ruby_version = '>= 2.7.0'
+  s.required_ruby_version = '>= 3.0.0'
 
   s.license = 'MIT'
 
   s.add_dependency "nori",     "~> 2.4"
-  s.add_dependency "httpi",    ">= 2.4.5"
-  s.add_dependency "wasabi",   "~> 3.4"
+  s.add_dependency "httpi",    ">= 2.4.5", " < 5"
+  s.add_dependency "wasabi",   ">= 3.7", " < 6"
   s.add_dependency "akami",    "~> 1.2"
   s.add_dependency "gyoku",    "~> 1.2"
   s.add_dependency "builder",  ">= 2.1.2"
@@ -33,6 +33,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 3.9"
   s.add_development_dependency "mocha", "~> 0.14"
   s.add_development_dependency "json",  ">= 2.3.0"
+
+  s.metadata["rubygems_mfa_required"] = "true"
 
   s.files = Dir['CHANGELOG.md', 'LICENSE', 'README.md', 'Rakefile', 'lib/**/*.rb']
 
