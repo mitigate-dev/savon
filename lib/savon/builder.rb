@@ -17,7 +17,7 @@ module Savon
   # and signs the document when a WSSE signature is present. Message-body
   # serialization is delegated to {Savon::Message}, the Header element to
   # {Savon::Header}, and Hash-to-XML conversion to Gyoku.
-  class Builder
+  class Builder # rubocop:disable Metrics/ClassLength
     attr_reader :multipart
 
     SCHEMA_TYPES = {
