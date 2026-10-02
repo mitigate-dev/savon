@@ -4,6 +4,7 @@ require "savon/addressing"
 require "savon/header"
 require "savon/message"
 require "savon/effective_options"
+require "savon/mtom"
 require "nokogiri"
 require "builder"
 require "gyoku"
@@ -17,7 +18,9 @@ module Savon
   # and signs the document when a WSSE signature is present. Message-body
   # serialization is delegated to {Savon::Message}, the Header element to
   # {Savon::Header}, and Hash-to-XML conversion to Gyoku.
-  class Builder # rubocop:disable Metrics/ClassLength
+  class Builder
+    include Mtom
+
     attr_reader :multipart
 
     SCHEMA_TYPES = {
@@ -284,19 +287,8 @@ module Savon
 
     def init_multipart_message(message_xml)
       multipart_message = Mail.new
-
-      # MTOM differs from general SOAP attachments:
-      # 1. binary encoding
-      # 2. application/xop+xml mime type
-      if @locals[:mtom]
-        type = "application/xop+xml; charset=#{@globals[:encoding]}; type=\"text/xml\""
-
-        multipart_message.transport_encoding = 'binary'
-        message_xml.force_encoding('BINARY')
-      else
-        type = 'text/xml'
-      end
-
+      apply_mtom_encoding(multipart_message, message_xml) if @locals[:mtom]
+      type = xml_part_content_type
       xml_part = Mail::Part.new do
         content_type type
         body message_xml
