@@ -133,14 +133,22 @@ module Savon
 
       if builder.multipart
         # RFC 2387 §3 (multipart/related) - SOAP envelope is the root body part
-        headers["Content-Type"] = [
-          "multipart/related",
-          "type=\"#{SOAP_REQUEST_TYPE[@globals[:soap_version]]}\"",
-          "start=\"#{builder.multipart[:start]}\"",
-          "boundary=\"#{builder.multipart[:multipart_boundary]}\""
-        ].join("; ")
+        content_type = ["multipart/related"]
+
+        if @locals[:mtom]
+          # SOAP 1.2 MTOM §3.1 - the root part is an XOP package
+          content_type << "type=\"application/xop+xml\""
+          content_type << "start-info=\"application/soap+xml\""
+        else
+          content_type << "type=\"#{SOAP_REQUEST_TYPE[@globals[:soap_version]]}\""
+        end
+
+        content_type << "start=\"#{builder.multipart[:start]}\""
+        content_type << "boundary=\"#{builder.multipart[:multipart_boundary]}\""
+
+        headers["Content-Type"] = content_type.join("; ")
         headers["MIME-Version"] = "1.0"
-        headers["Accept-Encoding"] = "gzip,deflate"
+        headers["Accept-Encoding"] = "gzip,deflate" unless @locals[:mtom]
       else
         headers["Content-Type"] = CONTENT_TYPE[@globals[:soap_version]] % @globals[:encoding]
       end
